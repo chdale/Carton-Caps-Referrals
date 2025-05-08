@@ -1,0 +1,6 @@
+@CartonCapsAPI_HostAddress = http://localhost:5037
+
+GET {{CartonCapsAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

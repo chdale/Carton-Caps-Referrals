@@ -10,15 +10,22 @@ namespace CartonCapsAPI.Controllers
     {
         private readonly ILogger<ReferralController> _logger;
         private readonly IUserService _userService;
-        private readonly IStringUtility _stringUtility;
 
-        public ReferralController(ILogger<ReferralController> logger, IUserService userService, IStringUtility stringUtility)
+        public ReferralController(ILogger<ReferralController> logger, IUserService userService)
         {
             _logger = logger;
             _userService = userService;
-            _stringUtility = stringUtility;
         }
 
+        /// <summary>
+        /// An API endpoint that gets the referral code and active referrals they have
+        /// 
+        /// This method assumes that since this is a new feature, that there will be users who need to have referral codes generated
+        /// as they did not have referral codes prior to the creation of the feature. It is assumed that the new field was made nullable for 
+        /// all existing users.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>A dto containing user's referral code and all active referrals</returns>
         [HttpGet("GetReferralInformation/{userId}")]
         public async Task<IActionResult> GetReferralInformationByUser(string userId)
         {
@@ -30,20 +37,17 @@ namespace CartonCapsAPI.Controllers
 
             if (string.IsNullOrWhiteSpace(user.ReferralCode))
             {
-                var existingReferralCodes = await _userService.GetReferralCodesAsync();
-                var uniqueReferralCode = _stringUtility.GenerateUniqueReferralCode(Constants.ReferralCodeSize, existingReferralCodes);
-                user.ReferralCode = uniqueReferralCode;
-                await _userService.UpdateUserAsync(user);
+                var newReferralCode = await _userService.UpdateReferralCodeAsync(user);
 
                 return Ok(new ReferralInformationDto
                 {
-                    ReferralCode = uniqueReferralCode,
+                    ReferralCode = newReferralCode,
                     Referrals = new List<ReferralDto>()
                 });
             }
 
-            var referralInformation = await _userService.GetReferralInformationByReferralCodeAsync(user.ReferralCode);
-            return Ok(referralInformation);
+            var existingReferralInformation = await _userService.GetReferralInformationByReferralCodeAsync(user.ReferralCode);
+            return Ok(existingReferralInformation);
         }
     }
 }

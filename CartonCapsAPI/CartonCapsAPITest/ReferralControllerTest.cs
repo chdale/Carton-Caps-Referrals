@@ -13,7 +13,6 @@ namespace CartonCapsAPITest
     {
         Mock<ILogger<ReferralController>> _logger;
         Mock<IUserService> _userService;
-        Mock<IStringUtility> _stringUtility;
         ReferralController _controller;
 
         public ReferralControllerTest()
@@ -21,8 +20,6 @@ namespace CartonCapsAPITest
             _logger = new Mock<ILogger<ReferralController>>();
 
             _userService = new Mock<IUserService>();
-
-            _stringUtility = new Mock<IStringUtility>();
 
             #region Mock Data
 
@@ -85,35 +82,23 @@ namespace CartonCapsAPITest
                 }
             };
 
-            var referralInformationWithNoReferees = new ReferralInformationDto
-            {
-                ReferralCode = uniqueReferralCode,
-                Referrals = new List<ReferralDto>()
-            };
-
             #endregion
 
             #region Mock Methods
 
-            _userService.Setup(us => us.GetReferralCodesAsync().Result)
-                .Returns(existingReferralCodes);
             _userService.Setup(us => us.GetUserAsync(It.IsIn<string>(userIdWithReferralCode)).Result)
                 .Returns(existingUserHasReferralCode);
             _userService.Setup(us => us.GetUserAsync(It.IsIn<string>(userIdWithNoReferralCode)).Result)
                 .Returns(existingUserHasNoReferralCode);
             _userService.Setup(us => us.GetUserAsync(It.Is<string>(x => x.Equals(userIdNotFound))).Result)
                 .Returns((User?)null);
-            _userService.Setup(us => us.UpdateUserAsync(It.IsAny<User>()));
+            _userService.Setup(us => us.UpdateReferralCodeAsync(It.IsAny<User>()).Result)
+                .Returns(uniqueReferralCode);
             _userService.Setup(us => us.GetReferralInformationByReferralCodeAsync(It.IsIn<string>(existingReferralCodes)).Result)
                 .Returns(referralInformationWithReferees);
-            _userService.Setup(us => us.GetReferralInformationByReferralCodeAsync(It.IsNotIn<string>(existingReferralCodes)).Result)
-                .Returns(referralInformationWithNoReferees);
-
-            _stringUtility.Setup(su => su.GenerateUniqueReferralCode(It.IsAny<int>(), It.IsAny<IEnumerable<string>>()))
-                .Returns(uniqueReferralCode);
             #endregion
 
-            _controller = new ReferralController(_logger.Object, _userService.Object, _stringUtility.Object);
+            _controller = new ReferralController(_logger.Object, _userService.Object);
         }
 
         [Fact]

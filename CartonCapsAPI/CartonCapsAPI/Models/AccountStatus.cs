@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+using Microsoft.OpenApi.Attributes;
 
 namespace CartonCapsAPI.Models;
 
 public enum AccountStatus
 {
     Active = 0,
-    [Display(Name = "Awaiting Activation")]
+    [Display("Awaiting Activation")]
     AwaitingActivation = 1
 }

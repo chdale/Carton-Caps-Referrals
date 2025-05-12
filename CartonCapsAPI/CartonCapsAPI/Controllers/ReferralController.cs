@@ -27,6 +27,9 @@ public class ReferralController : ControllerBase
     /// </summary>
     /// <param name="userId"></param>
     /// <returns>Either an OK Result with a dto containing user's referral code and all active referrals or Error Status Code containing messaging with more details</returns>
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ReferralInformationDto))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
     [HttpGet("GetReferralInformation/{userId}")]
     public async Task<IActionResult> GetReferralInformationByUser(int userId)
     {

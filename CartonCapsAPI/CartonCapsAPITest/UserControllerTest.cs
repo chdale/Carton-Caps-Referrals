@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using System.Net;
 
-namespace CartonCapsAPITest;
+namespace CartonCapsAPI.Test;
 
 public class UserControllerTest
 {

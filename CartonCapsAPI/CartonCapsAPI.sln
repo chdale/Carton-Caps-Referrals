@@ -5,7 +5,7 @@ VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CartonCapsAPI", "CartonCapsAPI\CartonCapsAPI.csproj", "{462DC304-06E7-4FF1-ABCD-7BF6922E8341}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CartonCapsAPITest", "CartonCapsAPITest\CartonCapsAPITest.csproj", "{7B7057A9-B08D-967C-04AF-1CDC019CD8FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CartonCapsAPI.Test", "CartonCapsAPITest\CartonCapsAPI.Test.csproj", "{7B7057A9-B08D-967C-04AF-1CDC019CD8FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

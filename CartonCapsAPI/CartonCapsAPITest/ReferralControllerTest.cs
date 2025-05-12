@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Extensions;
 using Moq;
 
-namespace CartonCapsAPITest;
+namespace CartonCapsAPI.Test;
 
 public class ReferralControllerTest
 {

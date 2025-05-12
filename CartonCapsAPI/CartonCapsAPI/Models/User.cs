@@ -2,6 +2,9 @@
 
 namespace CartonCapsAPI.Models
 {
+    /// <summary>
+    /// User object, several of the nullable values are due to the expectation of new fields added for referral feature
+    /// </summary>
     public class User
     {
         public int UserId { get; set; }

@@ -26,6 +26,7 @@ public class AccountController : ControllerBase
     /// <param name="isLoggedIn"></param>
     /// <param name="referralCode"></param>
     /// <returns>A dto containing data on how the application should launch and referral code if applicable</returns>
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AppLaunchDto))]
     [HttpGet("GetApplicationLaunchData/{isLoggedIn}")]
     public async Task<IActionResult> GetApplicationLaunchData(bool isLoggedIn, [FromQuery] string? referralCode = null)
     {

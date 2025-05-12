@@ -28,8 +28,13 @@ public class UserController : ControllerBase
     /// </summary>
     /// <param name="userId"></param>
     /// <returns>Either an OK Result or Error Status Code containing messaging with more details</returns>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpPost("SendSmsConfirmation")]
-    public async Task<IActionResult> SendSmsConfirmation([FromBody] int userId)
+    public async Task<IActionResult> SendSmsConfirmation(int userId)
     {
         var user = await _userService.GetUserAsync(userId);
         if (user == null)
@@ -80,6 +85,11 @@ public class UserController : ControllerBase
     /// <param name="userId"></param>
     /// <param name="activationToken"></param>
     /// <returns>Status Code object potentially with message</returns>
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(string))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
     [HttpPost("ActivateAccount")]
     public async Task<IActionResult> ActivateAccount([FromQuery] int userId, [FromQuery] string activationToken)
     {

@@ -15,6 +15,12 @@ public static class StringUtility
                 https://www.cartoncapsnetapichallenge2025.com/api/activateaccount?userId={userId}&activationToken={activationToken}";
     }
 
+    /// <summary>
+    /// Used for generating both activation codes and referral codes using desired length and codes that can't be included
+    /// </summary>
+    /// <param name="length"></param>
+    /// <param name="unusableCodes"></param>
+    /// <returns>A string representation of randomly generated alphanumeric code</returns>
     public static string GenerateCode(int length, IEnumerable<string> unusableCodes = null)
     {
         Random rand = new Random();
@@ -37,6 +43,11 @@ public static class StringUtility
         }
     }
 
+    /// <summary>
+    /// Removes non digit formatting from phone numbers for validation and usage
+    /// </summary>
+    /// <param name="phoneNumber"></param>
+    /// <returns>A string representation of a phone number stripped of non-numeric characters</returns>
     public static string SanitizePhoneNumber(string phoneNumber)
     {
         return new string(phoneNumber.Where(x => char.IsDigit(x)).ToArray());

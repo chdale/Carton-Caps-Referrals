@@ -1,7 +1,13 @@
+using CartonCapsAPI.Services;
+using CartonCapsAPI.Services.TestServices;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Use test services for development
+builder.Services.AddSingleton<ISmsService, TestSmsService>();
+builder.Services.AddSingleton<IUserService, TestUserService>();
 
+// Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

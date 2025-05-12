@@ -24,9 +24,9 @@ public interface IUserService
     /// <summary>
     /// Gets referral information for use on Carton Caps user referrals page
     /// </summary>
-    /// <param name="referralCode"></param>
+    /// <param name="userId"></param>
     /// <returns>A dto containing the user's referral code and display information for all active referrals they have</returns>
-    Task<ReferralInformationDto> GetReferralInformationByReferralCodeAsync(string referralCode);
+    Task<ReferralInformationDto> GetReferralInformationByUserIdAsync(int userId, string referralCode);
 
     /// <summary>
     /// Creates new unique referral code for user and returns it after successfully updating the database
@@ -48,4 +48,11 @@ public interface IUserService
     /// <param name="user"></param>
     /// <returns>A boolean representing successfully updating the database</returns>
     Task<bool> UpdateUserAsync(User user);
+
+    /// <summary>
+    /// Verifies that the referral code exists in the database
+    /// </summary>
+    /// <param name="referralCode"></param>
+    /// <returns>A boolean representing the existence of the referral code</returns>
+    Task<bool> ValidateReferralCodeAsync(string referralCode);
 }

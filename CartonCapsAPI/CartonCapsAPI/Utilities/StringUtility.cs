@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace CartonCapsAPI;
+namespace CartonCapsAPI.Utilities;
 
 public static class StringUtility
 {

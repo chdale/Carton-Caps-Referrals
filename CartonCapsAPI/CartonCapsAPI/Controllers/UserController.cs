@@ -1,5 +1,6 @@
 ﻿using CartonCapsAPI.Models;
 using CartonCapsAPI.Services;
+using CartonCapsAPI.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CartonCapsAPI.Controllers;
@@ -78,7 +79,7 @@ public class UserController : ControllerBase
     /// </summary>
     /// <param name="userId"></param>
     /// <param name="activationToken"></param>
-    /// <returns></returns>
+    /// <returns>Status Code object potentially with message</returns>
     [HttpPost("ActivateAccount")]
     public async Task<IActionResult> ActivateAccount([FromQuery] int userId, [FromQuery] string activationToken)
     {

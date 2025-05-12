@@ -12,7 +12,7 @@ namespace CartonCapsAPI.Models
         public int ZipCode { get; set; }
         public AccountStatus AccountStatus { get; set; }
         public string? ReferralCode { get; set; }
-        public string? ReferredByCode { get; set;}
+        public int? ReferredByUser { get; set;}
         public string? ActivationToken { get; set; }
         public DateTime? TokenExpirationDate { get; set; }
     }

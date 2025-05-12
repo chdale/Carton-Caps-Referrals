@@ -59,7 +59,7 @@ public class UserControllerTest
             ZipCode = 11122,
             AccountStatus = AccountStatus.Active,
             ReferralCode = null,
-            ReferredByCode = null
+            ReferredByUser = null
         };
 
         var existingUserInactive = new User
@@ -72,7 +72,7 @@ public class UserControllerTest
             ZipCode = 11122,
             AccountStatus = AccountStatus.AwaitingActivation,
             ReferralCode = "123ABC",
-            ReferredByCode = null
+            ReferredByUser = null
         };
 
         var existingUserNullPhoneNumber = new User
@@ -85,7 +85,7 @@ public class UserControllerTest
             ZipCode = 11122,
             AccountStatus = AccountStatus.AwaitingActivation,
             ReferralCode = "123ABC",
-            ReferredByCode = null
+            ReferredByUser = null
         };
 
         var existingUserInvalidPhoneNumber = new User
@@ -98,7 +98,7 @@ public class UserControllerTest
             ZipCode = 11122,
             AccountStatus = AccountStatus.AwaitingActivation,
             ReferralCode = "123ABC",
-            ReferredByCode = null
+            ReferredByUser = null
         };
 
         var existingUserInvalidConfirmation = new User
@@ -111,7 +111,7 @@ public class UserControllerTest
             ZipCode = 11122,
             AccountStatus = AccountStatus.AwaitingActivation,
             ReferralCode = "123ABC",
-            ReferredByCode = null
+            ReferredByUser = null
         };
 
 
@@ -125,7 +125,7 @@ public class UserControllerTest
             ZipCode = 11122,
             AccountStatus = AccountStatus.AwaitingActivation,
             ReferralCode = null,
-            ReferredByCode = null,
+            ReferredByUser = null,
             ActivationToken = validConfirmationToken,
             TokenExpirationDate = lateExpirationDate
         };
@@ -140,7 +140,7 @@ public class UserControllerTest
             ZipCode = 11122,
             AccountStatus = AccountStatus.AwaitingActivation,
             ReferralCode = null,
-            ReferredByCode = null,
+            ReferredByUser = null,
             ActivationToken = validConfirmationToken,
             TokenExpirationDate = lateExpirationDate
         };
@@ -155,7 +155,7 @@ public class UserControllerTest
             ZipCode = 11122,
             AccountStatus = AccountStatus.AwaitingActivation,
             ReferralCode = null,
-            ReferredByCode = null,
+            ReferredByUser = null,
             ActivationToken = validConfirmationToken,
             TokenExpirationDate = earlyExpirationDate
         };
@@ -170,7 +170,7 @@ public class UserControllerTest
             ZipCode = 11122,
             AccountStatus = AccountStatus.AwaitingActivation,
             ReferralCode = null,
-            ReferredByCode = null,
+            ReferredByUser = null,
             ActivationToken = validConfirmationToken,
             TokenExpirationDate = lateExpirationDate
         };
@@ -189,7 +189,7 @@ public class UserControllerTest
             ZipCode = 11122,
             AccountStatus = AccountStatus.Active,
             ReferralCode = "123ABC",
-            ReferredByCode = null,
+            ReferredByUser = null,
             ActivationToken = validConfirmationToken,
             TokenExpirationDate = lateExpirationDate
         };
@@ -204,7 +204,7 @@ public class UserControllerTest
             ZipCode = 11122,
             AccountStatus = AccountStatus.Active,
             ReferralCode = "123ABC",
-            ReferredByCode = null,
+            ReferredByUser = null,
             ActivationToken = validConfirmationToken,
             TokenExpirationDate = lateExpirationDate
         };
@@ -219,7 +219,7 @@ public class UserControllerTest
             ZipCode = 11122,
             AccountStatus = AccountStatus.AwaitingActivation,
             ReferralCode = "123ABC",
-            ReferredByCode = null,
+            ReferredByUser = null,
             ActivationToken = validConfirmationToken,
             TokenExpirationDate = lateExpirationDate
         };
@@ -234,7 +234,7 @@ public class UserControllerTest
             ZipCode = 11122,
             AccountStatus = AccountStatus.AwaitingActivation,
             ReferralCode = "123ABC",
-            ReferredByCode = null,
+            ReferredByUser = null,
             ActivationToken = validConfirmationToken,
             TokenExpirationDate = lateExpirationDate
         };

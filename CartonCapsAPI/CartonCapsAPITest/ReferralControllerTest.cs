@@ -45,7 +45,7 @@ public class ReferralControllerTest
             ZipCode = 11122,
             AccountStatus = AccountStatus.Active,
             ReferralCode = null,
-            ReferredByCode = null
+            ReferredByUser = null
         };
 
         var existingUserExistingReferralCode = new User
@@ -58,7 +58,7 @@ public class ReferralControllerTest
             ZipCode = 11122,
             AccountStatus = AccountStatus.Active,
             ReferralCode = "123ABC",
-            ReferredByCode = null
+            ReferredByUser = null
         };
 
         var existingUserFailToUpdateReferralCode = new User
@@ -71,7 +71,7 @@ public class ReferralControllerTest
             ZipCode = 11122,
             AccountStatus = AccountStatus.Active,
             ReferralCode = null,
-            ReferredByCode = null
+            ReferredByUser = null
         };
 
         var existingUserInactiveAccount = new User
@@ -84,7 +84,7 @@ public class ReferralControllerTest
             ZipCode = 11122,
             AccountStatus = AccountStatus.AwaitingActivation,
             ReferralCode = null,
-            ReferredByCode = null
+            ReferredByUser = null
         };
 
         var referralInformationWithReferees = new ReferralInformationDto(
@@ -116,7 +116,7 @@ public class ReferralControllerTest
         _userService.Setup(us => us.UpdateReferralCodeAsync(It.Is<User>(x => x.UserId == userIdFailReferralCodeUpdate)).Result)
             .Returns(string.Empty);
 
-        _userService.Setup(us => us.GetReferralInformationByReferralCodeAsync(It.IsIn<string>(existingReferralCodes)).Result)
+        _userService.Setup(us => us.GetReferralInformationByUserIdAsync(It.IsAny<int>(), It.IsIn<string>(existingReferralCodes)).Result)
             .Returns(referralInformationWithReferees);
         #endregion
 
@@ -199,19 +199,19 @@ public class ReferralControllerTest
     }
 
     [Fact]
-    public void GetReferralInformationByUser_Referral_InactiveCountUnauthorized()
+    public void GetReferralInformationByUser_Referral_InactiveAccountForbidden()
     {
         //Arrange
         var userIdInactiveAccount = 127;
 
         //Act
         var result = _controller.GetReferralInformationByUser(userIdInactiveAccount).Result;
-        var resultType = result as UnauthorizedObjectResult;
+        var resultType = result as ObjectResult;
         var resultValue = resultType.Value as string;
 
         //Assert
         Assert.NotNull(result);
-        Assert.Equal(StatusCodes.Status401Unauthorized, resultType.StatusCode);
+        Assert.Equal(StatusCodes.Status403Forbidden, resultType.StatusCode);
         Assert.IsType<string>(resultValue);
         Assert.Equal(Constants.UserMessage.InactiveAccountError(userIdInactiveAccount), resultValue);
     }

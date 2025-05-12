@@ -1,5 +1,4 @@
-﻿
-namespace CartonCapsAPI;
+﻿namespace CartonCapsAPI.Utilities;
 
 public static class StringExtensions
 {

@@ -1,5 +1,6 @@
 ﻿using CartonCapsAPI.Models;
 using CartonCapsAPI.Models.DTOs;
+using CartonCapsAPI.Utilities;
 using Microsoft.OpenApi.Extensions;
 
 namespace CartonCapsAPI.Services.TestServices
@@ -18,7 +19,7 @@ namespace CartonCapsAPI.Services.TestServices
                 ZipCode = 11122,
                 AccountStatus = AccountStatus.Active,
                 ReferralCode = "abc123",
-                ReferredByCode = null,
+                ReferredByUser = null,
                 ActivationToken = null,
                 TokenExpirationDate = null
             },
@@ -32,7 +33,7 @@ namespace CartonCapsAPI.Services.TestServices
                 ZipCode = 22211,
                 AccountStatus = AccountStatus.Active,
                 ReferralCode = null,
-                ReferredByCode = null,
+                ReferredByUser = null,
                 ActivationToken = null,
                 TokenExpirationDate = null
             },
@@ -46,7 +47,7 @@ namespace CartonCapsAPI.Services.TestServices
                 ZipCode = 33344,
                 AccountStatus = AccountStatus.AwaitingActivation,
                 ReferralCode = null,
-                ReferredByCode = null,
+                ReferredByUser = null,
                 ActivationToken = null,
                 TokenExpirationDate = null
             },
@@ -60,7 +61,7 @@ namespace CartonCapsAPI.Services.TestServices
                 ZipCode = 44433,
                 AccountStatus = AccountStatus.AwaitingActivation,
                 ReferralCode = null,
-                ReferredByCode = null,
+                ReferredByUser = null,
                 ActivationToken = "abc",
                 TokenExpirationDate = new DateTime(9999, 12, 31, 23, 59, 59)
             },
@@ -72,14 +73,14 @@ namespace CartonCapsAPI.Services.TestServices
             {
                 FirstName = "Rhonda",
                 LastName = "Patterson",
-                ReferredByCode = "abc123",
+                ReferredByUser = 1,
                 AccountStatus = AccountStatus.Active,
             },
             new User
             {
                 FirstName = "Bogdan",
                 LastName = "Anderson",
-                ReferredByCode = "abc123",
+                ReferredByUser = 1,
                 AccountStatus = AccountStatus.AwaitingActivation,
             }
         };
@@ -96,7 +97,7 @@ namespace CartonCapsAPI.Services.TestServices
                 ZipCode = user.ZipCode,
                 AccountStatus = user.AccountStatus,
                 ReferralCode = user.ReferralCode,
-                ReferredByCode = user.ReferredByCode,
+                ReferredByUser = user.ReferredByUser,
                 ActivationToken = StringUtility.GenerateCode(Constants.ActivationCodeSize),
                 TokenExpirationDate = DateTime.UtcNow.AddHours(1)
             };
@@ -109,12 +110,12 @@ namespace CartonCapsAPI.Services.TestServices
             return Task.FromResult(existingUsers.Where(x => x.ReferralCode != null).Select(x => x.ReferralCode.GetValueOrDefault()).AsEnumerable());
         }
 
-        public Task<ReferralInformationDto> GetReferralInformationByReferralCodeAsync(string referralCode)
+        public Task<ReferralInformationDto> GetReferralInformationByUserIdAsync(int userId, string referralCode)
         {
             return Task.FromResult(new ReferralInformationDto(
                 referralCode,
                 referredUsers
-                    .Where(x => x.ReferredByCode != null && x.ReferredByCode.Equals(referralCode))
+                    .Where(x => x.ReferredByUser != null && x.ReferredByUser.Equals(userId))
                     .Select(x => new ReferralDto(StringUtility.GetUserDisplayName(x.FirstName, x.LastName), x.AccountStatus.GetDisplayName()))));
         }
 
@@ -131,6 +132,11 @@ namespace CartonCapsAPI.Services.TestServices
         public Task<bool> UpdateUserAsync(User user)
         {
             return Task.FromResult(true);
+        }
+
+        public Task<bool> ValidateReferralCodeAsync(string referralCode)
+        {
+            return Task.FromResult(referralCode.Count() == Constants.ReferralCodeSize);
         }
     }
 }

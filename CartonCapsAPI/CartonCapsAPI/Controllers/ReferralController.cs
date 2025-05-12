@@ -1,4 +1,5 @@
-﻿using CartonCapsAPI.Models.DTOs;
+﻿using CartonCapsAPI.Models;
+using CartonCapsAPI.Models.DTOs;
 using CartonCapsAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,9 +35,9 @@ public class ReferralController : ControllerBase
         {
             return NotFound(Constants.UserMessage.UserNotFoundError(userId));
         }
-        if (user.AccountStatus == Models.AccountStatus.AwaitingActivation)
+        if (user.AccountStatus == AccountStatus.AwaitingActivation)
         {
-            return Unauthorized(Constants.UserMessage.InactiveAccountError(userId));
+            return StatusCode(StatusCodes.Status403Forbidden, Constants.UserMessage.InactiveAccountError(userId));
         }
 
         if (string.IsNullOrWhiteSpace(user.ReferralCode))
@@ -53,7 +54,7 @@ public class ReferralController : ControllerBase
             }
         }
 
-        var existingReferralInformation = await _userService.GetReferralInformationByReferralCodeAsync(user.ReferralCode);
+        var existingReferralInformation = await _userService.GetReferralInformationByUserIdAsync(user.UserId, user.ReferralCode);
         return Ok(existingReferralInformation);
     }
 }
